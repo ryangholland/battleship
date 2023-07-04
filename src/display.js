@@ -1,30 +1,45 @@
 class DisplayController {
   constructor() {}
 
-  static renderBoard(div, board) {
-    // Clear any old displays and build new board display
-    this.clearDiv(div);
+  static buildPlayerBoard(div, board) {
     board.rows.forEach((row) => {
       const newRow = document.createElement("div");
       row.forEach((square) => {
         const newSquare = document.createElement("div");
-
-        newSquare.setAttribute("data-square", square);
-
-        // If square is occupied, color it white
-        if (board.occupiedSquares.includes(square))
-          newSquare.classList.add("occupied");
-
+        newSquare.setAttribute("data-player-square", square);
         newRow.append(newSquare);
       });
       div.append(newRow);
     });
   }
 
-  static clearDiv(div) {
-    while (div.firstChild) {
-      div.removeChild(div.firstChild);
-    }
+  static buildOppBoard(div, board) {
+    board.rows.forEach((row) => {
+      const newRow = document.createElement("div");
+      row.forEach((square) => {
+        const newSquare = document.createElement("div");
+        newSquare.setAttribute("data-opp-square", square);
+        newRow.append(newSquare);
+      });
+      div.append(newRow);
+    });
+  }
+
+  static renderPlayerBoard(squares, board) {
+    this.clearSquares(squares);
+    // Check for any occupied squares, color them white
+    squares.forEach((square) => {
+      if (board.occupiedSquares.includes(Number(square.dataset.playerSquare))) {
+        square.classList.add("occupied");
+      }
+    });
+  }
+
+  static clearSquares(squares) {
+    squares.forEach((square) => {
+      square.className = "";
+      square.classList.add("blank");
+    });
   }
 }
 

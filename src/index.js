@@ -9,8 +9,9 @@ class Game {
   constructor() {
     this.aiPlayer = new Player(true);
     this.humanPlayer = new Player(false);
-    DisplayController.renderBoard(oppDiv, this.aiPlayer.gameboard);
-    DisplayController.renderBoard(playerDiv, this.humanPlayer.gameboard);
+    DisplayController.buildOppBoard(oppDiv, this.aiPlayer.gameboard);
+    DisplayController.buildPlayerBoard(playerDiv, this.humanPlayer.gameboard);
+    this.placeMockShips();
   }
 
   // Place ships at predetermined locations for testing purposes
@@ -24,12 +25,20 @@ class Game {
     this.humanPlayer.gameboard.placeShip(23, 4);
     this.humanPlayer.gameboard.placeShip(44, 3);
     this.humanPlayer.gameboard.placeShip(76, 2);
-
-
-    DisplayController.renderBoard(oppDiv, this.aiPlayer.gameboard)
-    DisplayController.renderBoard(playerDiv, this.humanPlayer.gameboard)
   }
 }
 
 const game = new Game();
-game.placeMockShips();
+
+const oppSquares = Array.from(document.querySelectorAll("[data-opp-square]"));
+oppSquares.forEach((square) => {
+  square.addEventListener("click", (e) => {
+    console.log(e.target.dataset.oppSquare);
+  });
+});
+
+const playerSquares = Array.from(
+  document.querySelectorAll("[data-player-square]")
+);
+
+DisplayController.renderPlayerBoard(playerSquares, game.humanPlayer.gameboard);
