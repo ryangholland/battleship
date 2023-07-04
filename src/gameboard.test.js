@@ -17,7 +17,7 @@ test("Placing a 5-length ship horizontally correctly populates occupiedSquares",
 
 test("Placing a 5-length ship horizontally correctly populates placedShips", () => {
   const gameboard = new Gameboard();
-  gameboard.placeShip(0, 5);
+  gameboard.placeShip(5, 5);
   expect(gameboard.placedShips.length).toBe(1);
 });
 

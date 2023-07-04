@@ -6,6 +6,8 @@
 
 * {
   margin: 0;
+  background-color: black;
+  color: white;
 }
 
 body {
@@ -22,15 +24,23 @@ body {
   gap: 5rem;
 }
 
-.opponent-board,
-.player-board {
+h2 {
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.opponent-board div,
+.player-board div {
   display: flex;
-  border: solid 1px black;
 }
 
 .opponent-board div div,
 .player-board div div {
   height: 50px;
   width: 50px;
-  border: solid 1px black;
+  border: solid 1px gray;
+}
+
+.occupied {
+  background-color: white;
 }

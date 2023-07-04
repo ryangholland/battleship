@@ -35,7 +35,7 @@ class Gameboard {
     // Fail to place ship if ship length extends beyond row length
     if (
       !this.rows.some(
-        (row) => row.includes(coord) && row.includes(coord + length)
+        (row) => row.includes(coord) && row.includes(coord + length - 1)
       )
     )
       return;
