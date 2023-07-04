@@ -73,6 +73,12 @@ class Gameboard {
       // ...else add the coord to the missedAttacks array
     } else this.missedAttacks.push(coord);
   }
+
+  allSunk() {
+    return this.placedShips.every((ship) => {
+      return ship.isSunk();
+    });
+  }
 }
 
 export { Gameboard };

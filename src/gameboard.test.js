@@ -69,3 +69,37 @@ test("receiveAttack fails if same coordiante is selected twice", () => {
   gameboard.receiveAttack(2);
   expect(gameboard.placedShips[0].hits).toBe(1);
 });
+
+test("allSunk reports all ships sunk (1 ship on board)", () => {
+  const gameboard = new Gameboard();
+  gameboard.placeShip(0, 3);
+  gameboard.receiveAttack(0);
+  gameboard.receiveAttack(1);
+  gameboard.receiveAttack(2);
+  expect(gameboard.allSunk()).toBe(true);
+});
+
+test("allSunk reports all ships sunk (2 ships on board)", () => {
+  const gameboard = new Gameboard();
+  gameboard.placeShip(0, 3);
+  gameboard.placeShip(10, 3);
+  gameboard.receiveAttack(0);
+  gameboard.receiveAttack(1);
+  gameboard.receiveAttack(2);
+  gameboard.receiveAttack(10);
+  gameboard.receiveAttack(11);
+  gameboard.receiveAttack(12);
+  expect(gameboard.allSunk()).toBe(true);
+});
+
+test("allSunk returns false if ships still floating", () => {
+  const gameboard = new Gameboard();
+  gameboard.placeShip(0, 3);
+  gameboard.placeShip(10, 3);
+  gameboard.receiveAttack(0);
+  gameboard.receiveAttack(1);
+  gameboard.receiveAttack(2);
+  gameboard.receiveAttack(10);
+  gameboard.receiveAttack(11);
+  expect(gameboard.allSunk()).toBe(false);
+});
