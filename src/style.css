@@ -1,3 +1,36 @@
-h1 {
-  color: blue;
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0;
+}
+
+body {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+}
+
+.main {
+  display: flex;
+  gap: 5rem;
+}
+
+.opponent-board,
+.player-board {
+  display: flex;
+  border: solid 1px black;
+}
+
+.opponent-board div div,
+.player-board div div {
+  height: 50px;
+  width: 50px;
+  border: solid 1px black;
 }
