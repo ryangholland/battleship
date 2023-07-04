@@ -46,3 +46,26 @@ test("Trying to place a ship beyond row length will fail 2", () => {
   gameboard.placeShip(97, 5);
   expect(gameboard.placedShips.length).toBe(0);
 });
+
+test("receiveAttack records a missed attack if no ship at given coordinate", () => {
+  const gameboard = new Gameboard();
+  gameboard.placeShip(0, 4);
+  gameboard.receiveAttack(50);
+  expect(gameboard.missedAttacks.length).toBe(1);
+  expect(gameboard.missedAttacks[0]).toBe(50);
+});
+
+test("receiveAttack records a hit if ship at given coordinate", () => {
+  const gameboard = new Gameboard();
+  gameboard.placeShip(0, 4);
+  gameboard.receiveAttack(2);
+  expect(gameboard.placedShips[0].hits).toBe(1);
+});
+
+test("receiveAttack fails if same coordiante is selected twice", () => {
+  const gameboard = new Gameboard();
+  gameboard.placeShip(0, 4);
+  gameboard.receiveAttack(2);
+  gameboard.receiveAttack(2);
+  expect(gameboard.placedShips[0].hits).toBe(1);
+});

@@ -2,6 +2,7 @@ import { Ship } from "./ship";
 
 class Gameboard {
   constructor() {
+    // Generate row numbers to assist with horizontal placement
     this.rows = [];
     for (let i = 0; i < 10; i++) {
       const newRow = [];
@@ -11,6 +12,7 @@ class Gameboard {
       this.rows.push(newRow);
     }
 
+    // Generate column numbers to assist with vertical placement
     this.cols = [];
     for (let i = 0; i < 10; i++) {
       const newCol = [];
@@ -24,6 +26,9 @@ class Gameboard {
     this.placedShips = [];
 
     this.placementMode = 1;
+
+    this.hitAttacks = [];
+    this.missedAttacks = [];
   }
 
   placeShip(coord, length) {
@@ -53,7 +58,21 @@ class Gameboard {
     this.occupiedSquares.push(...newCoords);
   }
 
-  receiveAttack(coord) {}
+  receiveAttack(coord) {
+    // Fail to attack if coord was previously guessed
+    if (this.hitAttacks.includes(coord) || this.missedAttacks.includes(coord))
+      return;
+
+    // If coord is an occupied square, hit the appropriate ship
+    if (this.occupiedSquares.includes(coord)) {
+      const hitShip = this.placedShips.find((ship) =>
+        ship.location.includes(coord)
+      );
+      hitShip.hit();
+      this.hitAttacks.push(coord);
+      // ...else add the coord to the missedAttacks array
+    } else this.missedAttacks.push(coord);
+  }
 }
 
 export { Gameboard };
