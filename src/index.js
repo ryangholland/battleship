@@ -15,17 +15,6 @@ class Game {
     this.oppSquares = Array.from(
       document.querySelectorAll("[data-opp-square]")
     );
-    this.oppSquares.forEach((square) => {
-      square.addEventListener("click", (e) => {
-        this.aiPlayer.gameboard.receiveAttack(
-          Number(e.target.dataset.oppSquare)
-        );
-        DisplayController.renderOppBoard(
-          this.oppSquares,
-          this.aiPlayer.gameboard
-        );
-      });
-    });
 
     this.playerSquares = Array.from(
       document.querySelectorAll("[data-player-square]")
@@ -36,6 +25,8 @@ class Game {
       this.playerSquares,
       this.humanPlayer.gameboard
     );
+
+    this.initGameLoop();
   }
 
   // Place ships at predetermined locations for testing purposes
@@ -49,6 +40,54 @@ class Game {
     this.humanPlayer.gameboard.placeShip(23, 4);
     this.humanPlayer.gameboard.placeShip(44, 3);
     this.humanPlayer.gameboard.placeShip(76, 2);
+  }
+
+  initGameLoop() {
+    this.oppSquares.forEach((square) => {
+      square.addEventListener("click", (e) => {
+        // If coord hasn't been guessed, attack and update opp board
+        if (
+          this.aiPlayer.gameboard.hitAttacks.includes(
+            Number(e.target.dataset.oppSquare)
+          ) ||
+          this.aiPlayer.gameboard.missedAttacks.includes(
+            Number(e.target.dataset.oppSquare)
+          )
+        )
+          return;
+
+        this.aiPlayer.gameboard.receiveAttack(
+          Number(e.target.dataset.oppSquare)
+        );
+        DisplayController.renderOppBoard(
+          this.oppSquares,
+          this.aiPlayer.gameboard
+        );
+
+        // End game if all opp's ships sunk
+        if (this.aiPlayer.gameboard.allSunk()) {
+          // Game over code
+          console.log("Game over. Player wins.");
+        }
+
+        // Generate a random coord for AI's attack; make sure it hasn't been used
+        let aiAttack = null;
+        let checkArray = [
+          ...this.humanPlayer.gameboard.hitAttacks,
+          ...this.humanPlayer.gameboard.missedAttacks,
+        ];
+        do {
+          aiAttack = Math.floor(Math.random() * (Math.floor(99) - 0));
+        } while (checkArray.includes(aiAttack));
+
+        this.humanPlayer.gameboard.receiveAttack(aiAttack);
+
+        DisplayController.renderPlayerBoard(
+          this.playerSquares,
+          this.humanPlayer.gameboard
+        );
+      });
+    });
   }
 }
 
