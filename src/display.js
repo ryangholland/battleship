@@ -72,6 +72,12 @@ class DisplayController {
       square.classList.add("blank");
     });
   }
+
+  static clearDiv(div) {
+    while (div.firstChild) {
+      div.removeChild(div.lastChild);
+    }
+  }
 }
 
 export { DisplayController };

@@ -101,17 +101,11 @@ class Game {
     gameOverText.textContent = result === "win" ? "You won!" : "You lost!";
     gameOverModal.showModal();
     newGameBtn.addEventListener("click", () => {
-      this.clearDiv(oppDiv);
-      this.clearDiv(playerDiv);
+      DisplayController.clearDiv(oppDiv);
+      DisplayController.clearDiv(playerDiv);
       gameOverModal.close();
       game = new Game();
     });
-  }
-
-  clearDiv(div) {
-    while (div.firstChild) {
-      div.removeChild(div.lastChild);
-    }
   }
 }
 
