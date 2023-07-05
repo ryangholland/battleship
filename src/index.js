@@ -86,6 +86,12 @@ class Game {
           this.playerSquares,
           this.humanPlayer.gameboard
         );
+
+        // End game if all player's ships sunk
+        if (this.humanPlayer.gameboard.allSunk()) {
+          // Game over code
+          console.log("Game over. Opponent wins.");
+        }
       });
     });
   }

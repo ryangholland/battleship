@@ -40,6 +40,13 @@ class DisplayController {
         square.classList.add("missed");
       }
     });
+
+    // Check for any hit attacks, color them red
+    squares.forEach((square) => {
+      if (board.hitAttacks.includes(Number(square.dataset.playerSquare))) {
+        square.classList.add("hit");
+      }
+    });
   }
 
   static renderOppBoard(squares, board) {
@@ -48,6 +55,13 @@ class DisplayController {
     squares.forEach((square) => {
       if (board.missedAttacks.includes(Number(square.dataset.oppSquare))) {
         square.classList.add("missed");
+      }
+    });
+
+    // Check for any hit attacks, color them red
+    squares.forEach((square) => {
+      if (board.hitAttacks.includes(Number(square.dataset.oppSquare))) {
+        square.classList.add("hit");
       }
     });
   }

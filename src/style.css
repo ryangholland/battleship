@@ -52,3 +52,7 @@ h2 {
 .missed {
   background-color: blue;
 }
+
+.hit {
+  background-color: red;
+}
