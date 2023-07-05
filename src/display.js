@@ -33,6 +33,23 @@ class DisplayController {
         square.classList.add("occupied");
       }
     });
+
+    // Check for any missed attacks, color them blue
+    squares.forEach((square) => {
+      if (board.missedAttacks.includes(Number(square.dataset.playerSquare))) {
+        square.classList.add("missed");
+      }
+    });
+  }
+
+  static renderOppBoard(squares, board) {
+    this.clearSquares(squares);
+    // Check for any missed attacks, color them blue
+    squares.forEach((square) => {
+      if (board.missedAttacks.includes(Number(square.dataset.oppSquare))) {
+        square.classList.add("missed");
+      }
+    });
   }
 
   static clearSquares(squares) {

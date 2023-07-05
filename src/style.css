@@ -48,3 +48,7 @@ h2 {
 .occupied {
   background-color: white;
 }
+
+.missed {
+  background-color: blue;
+}

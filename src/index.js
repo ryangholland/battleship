@@ -11,7 +11,31 @@ class Game {
     this.humanPlayer = new Player(false);
     DisplayController.buildOppBoard(oppDiv, this.aiPlayer.gameboard);
     DisplayController.buildPlayerBoard(playerDiv, this.humanPlayer.gameboard);
+
+    this.oppSquares = Array.from(
+      document.querySelectorAll("[data-opp-square]")
+    );
+    this.oppSquares.forEach((square) => {
+      square.addEventListener("click", (e) => {
+        this.aiPlayer.gameboard.receiveAttack(
+          Number(e.target.dataset.oppSquare)
+        );
+        DisplayController.renderOppBoard(
+          this.oppSquares,
+          this.aiPlayer.gameboard
+        );
+      });
+    });
+
+    this.playerSquares = Array.from(
+      document.querySelectorAll("[data-player-square]")
+    );
+
     this.placeMockShips();
+    DisplayController.renderPlayerBoard(
+      this.playerSquares,
+      this.humanPlayer.gameboard
+    );
   }
 
   // Place ships at predetermined locations for testing purposes
@@ -29,16 +53,3 @@ class Game {
 }
 
 const game = new Game();
-
-const oppSquares = Array.from(document.querySelectorAll("[data-opp-square]"));
-oppSquares.forEach((square) => {
-  square.addEventListener("click", (e) => {
-    console.log(e.target.dataset.oppSquare);
-  });
-});
-
-const playerSquares = Array.from(
-  document.querySelectorAll("[data-player-square]")
-);
-
-DisplayController.renderPlayerBoard(playerSquares, game.humanPlayer.gameboard);
