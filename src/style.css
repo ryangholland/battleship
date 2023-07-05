@@ -17,6 +17,7 @@ body {
   justify-content: center;
   align-items: center;
   gap: 2rem;
+  position: relative;
 }
 
 .main {
@@ -55,4 +56,30 @@ h2 {
 
 .hit {
   background-color: red;
+}
+
+dialog {
+  position: absolute;
+  top: 40%;
+  left: 44%;
+  text-align: center;
+  padding: 2rem;
+}
+
+h3 {
+  font-size: 2rem;
+  margin-bottom: 2rem;
+}
+
+button {
+  padding: 1rem 2rem;
+  border-radius: 0.5rem;
+  font-weight: bold;
+  font-size: 1rem;
+}
+
+button:hover {
+  cursor: pointer;
+  color: black;
+  background-color: white;
 }

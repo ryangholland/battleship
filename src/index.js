@@ -97,4 +97,4 @@ class Game {
   }
 }
 
-const game = new Game();
+let game = new Game();
