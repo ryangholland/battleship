@@ -4,6 +4,9 @@ import { DisplayController } from "./display";
 
 const oppDiv = document.querySelector(".opponent-board");
 const playerDiv = document.querySelector(".player-board");
+const gameOverModal = document.querySelector("[data-game-over-modal]");
+const gameOverText = document.querySelector("[data-game-over-text]");
+const newGameBtn = document.querySelector("[data-new-game-button]");
 
 class Game {
   constructor() {
@@ -66,8 +69,7 @@ class Game {
 
         // End game if all opp's ships sunk
         if (this.aiPlayer.gameboard.allSunk()) {
-          // Game over code
-          console.log("Game over. Player wins.");
+          this.gameOver("win");
         }
 
         // Generate a random coord for AI's attack; make sure it hasn't been used
@@ -89,11 +91,27 @@ class Game {
 
         // End game if all player's ships sunk
         if (this.humanPlayer.gameboard.allSunk()) {
-          // Game over code
-          console.log("Game over. Opponent wins.");
+          this.gameOver("lose");
         }
       });
     });
+  }
+
+  gameOver(result) {
+    gameOverText.textContent = result === "win" ? "You won!" : "You lost!";
+    gameOverModal.showModal();
+    newGameBtn.addEventListener("click", () => {
+      this.clearDiv(oppDiv);
+      this.clearDiv(playerDiv);
+      gameOverModal.close();
+      game = new Game();
+    });
+  }
+
+  clearDiv(div) {
+    while (div.firstChild) {
+      div.removeChild(div.lastChild);
+    }
   }
 }
 
