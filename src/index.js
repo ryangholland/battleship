@@ -23,33 +23,6 @@ class Game {
       document.querySelectorAll("[data-player-square]")
     );
 
-    //this.placeMockShips();
-
-    this.initPlacementPhase();
-
-    DisplayController.renderPlayerBoard(
-      this.playerSquares,
-      this.humanPlayer.gameboard
-    );
-    DisplayController.renderOppBoard(this.oppSquares, this.aiPlayer.gameboard);
-
-    this.initGameLoop();
-  }
-
-  // Place ships at predetermined locations for testing purposes
-  placeMockShips() {
-    this.aiPlayer.gameboard.placeShip(0, 5);
-    this.aiPlayer.gameboard.placeShip(22, 4);
-    this.aiPlayer.gameboard.placeShip(44, 3);
-    this.aiPlayer.gameboard.placeShip(66, 2);
-
-    this.humanPlayer.gameboard.placeShip(5, 5);
-    this.humanPlayer.gameboard.placeShip(23, 4);
-    this.humanPlayer.gameboard.placeShip(44, 3);
-    this.humanPlayer.gameboard.placeShip(76, 2);
-  }
-
-  initGameLoop() {
     this.initPlacementPhase();
   }
 
@@ -65,10 +38,27 @@ class Game {
         }
       });
     }
+    
+    this.activatePlacementSquares();    
+  }
 
-    // Player placement
-    this.activatePlacementSquares();
+  activateAttackSquares() {
+    this.oppSquares.forEach((square) => {
+      square.addEventListener("click", (e) => {
+        this.playRound(e);
+      });
+    });
+  }
 
+  deactivateAttackSquares() {
+    this.oppSquares.forEach((square) => {
+      square.removeEventListener("click", (e) => {
+        this.playRound(e);
+      });
+    });
+  }
+
+  activatePlacementSquares() {
     let playerPlaced = 0;
     this.playerSquares.forEach((square) => {
       square.addEventListener("click", (e) => {
@@ -94,25 +84,7 @@ class Game {
         }
       });
     });
-  }
 
-  activateAttackSquares() {
-    this.oppSquares.forEach((square) => {
-      square.addEventListener("click", (e) => {
-        this.playRound(e);
-      });
-    });
-  }
-
-  deactivateAttackSquares() {
-    this.oppSquares.forEach((square) => {
-      square.removeEventListener("click", (e) => {
-        this.playRound(e);
-      });
-    });
-  }
-
-  activatePlacementSquares() {
     this.playerSquares.forEach((square) => {
       square.addEventListener("mouseover", (e) => {
         if (this.humanPlayer.placing) {
@@ -190,9 +162,9 @@ class Game {
       DisplayController.clearDiv(oppDiv);
       DisplayController.clearDiv(playerDiv);
       gameOverModal.close();
-      game = new Game();
+      new Game();
     });
   }
 }
 
-let game = new Game();
+new Game();

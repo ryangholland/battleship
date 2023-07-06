@@ -52,12 +52,15 @@ class DisplayController {
   static renderOppBoard(squares, board) {
     this.clearSquares(squares);
 
-    // TESTING - Check for any occupied squares, color them white
+    // TESTING ONLY
+    // Check for any occupied squares, color them white
+    /*
     squares.forEach((square) => {
       if (board.occupiedSquares.includes(Number(square.dataset.oppSquare))) {
         square.classList.add("occupied");
       }
     });
+    */
 
     // Check for any missed attacks, color them blue
     squares.forEach((square) => {
