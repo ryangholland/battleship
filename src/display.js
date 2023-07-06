@@ -54,13 +54,12 @@ class DisplayController {
 
     // TESTING ONLY
     // Check for any occupied squares, color them white
-    
+
     squares.forEach((square) => {
       if (board.occupiedSquares.includes(Number(square.dataset.oppSquare))) {
         square.classList.add("occupied");
       }
     });
-    
 
     // Check for any missed attacks, color them blue
     squares.forEach((square) => {
@@ -92,17 +91,36 @@ class DisplayController {
   }
 
   static placementHover(coord, squares, length, mode) {
-    for (let i = coord; i < coord + length; i++) {
-      if (squares[i] && !squares[i].classList.contains("occupied")) {
-        squares[i].style.backgroundColor = "green";
+    if (mode > 0) {
+      for (let i = coord; i < coord + length; i++) {
+        if (squares[i] && !squares[i].classList.contains("occupied")) {
+          squares[i].style.backgroundColor = "green";
+        }
+      }
+    }
+
+    if (mode < 0) {
+      for (let i = coord; i < coord + length * 10; i += 10) {
+        if (squares[i] && !squares[i].classList.contains("occupied")) {
+          squares[i].style.backgroundColor = "green";
+        }
       }
     }
   }
 
   static placementHoverOut(coord, squares, length, mode) {
-    for (let i = coord; i < coord + length; i++) {
-      if (squares[i] && !squares[i].classList.contains("occupied")) {
-        squares[i].style.backgroundColor = "black";
+    if (mode > 0) {
+      for (let i = coord; i < coord + length; i++) {
+        if (squares[i] && !squares[i].classList.contains("occupied")) {
+          squares[i].style.backgroundColor = "black";
+        }
+      }
+    }
+    if (mode < 0) {
+      for (let i = coord; i < coord + length * 10; i += 10) {
+        if (squares[i] && !squares[i].classList.contains("occupied")) {
+          squares[i].style.backgroundColor = "black";
+        }
       }
     }
   }

@@ -39,8 +39,8 @@ class Game {
         this.aiPlayer.gameboard.placementMode *= -1;
       });
     }
-    
-    this.activatePlacementSquares();    
+
+    this.activatePlacementSquares();
   }
 
   activateAttackSquares() {
@@ -93,7 +93,7 @@ class Game {
             Number(e.target.dataset.playerSquare),
             this.playerSquares,
             this.humanPlayer.activeShip.length,
-            1
+            this.humanPlayer.gameboard.placementMode
           );
         }
       });
@@ -106,10 +106,19 @@ class Game {
             Number(e.target.dataset.playerSquare),
             this.playerSquares,
             this.humanPlayer.activeShip.length,
-            1
+            this.humanPlayer.gameboard.placementMode
           );
         }
       });
+    });
+
+    document.addEventListener("keypress", (e) => {
+      if (e.key === "r" || e.key === "R")
+        this.humanPlayer.gameboard.placementMode *= -1;
+      DisplayController.renderPlayerBoard(
+        this.playerSquares,
+        this.humanPlayer.gameboard
+      );
     });
   }
 
