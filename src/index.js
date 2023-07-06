@@ -46,12 +46,33 @@ class Game {
   }
 
   initGameLoop() {
+    this.initPlacementPhase();
     this.activateSquares();
   }
 
   initPlacementPhase() {
     // AI randomly places ships
-    //
+
+    this.playerSquares.forEach((square) => {
+      square.addEventListener("mouseover", (e) => {
+        DisplayController.placementHover(
+          Number(e.target.dataset.playerSquare),
+          this.playerSquares,
+          4,
+          1
+        );
+      });
+    });
+    this.playerSquares.forEach((square) => {
+      square.addEventListener("mouseout", (e) => {
+        DisplayController.placementHoverOut(
+          Number(e.target.dataset.playerSquare),
+          this.playerSquares,
+          4,
+          1
+        );
+      });
+    });
   }
 
   activateSquares() {

@@ -78,6 +78,22 @@ class DisplayController {
       div.removeChild(div.lastChild);
     }
   }
+
+  static placementHover(coord, squares, length, mode) {
+    for (let i = coord; i < (coord + length); i++) {
+      if (squares[i] && !squares[i].classList.contains("occupied")) {
+        squares[i].style.backgroundColor = "green";
+      }
+    }
+  }
+
+  static placementHoverOut(coord, squares, length, mode) {
+    for (let i = coord; i < (coord + length); i++) {
+      if (squares[i] && !squares[i].classList.contains("occupied")) {
+        squares[i].style.backgroundColor = "black";
+      }
+    }
+  }
 }
 
 export { DisplayController };
