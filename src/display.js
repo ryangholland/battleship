@@ -54,12 +54,13 @@ class DisplayController {
 
     // TESTING ONLY
     // Check for any occupied squares, color them white
-
+    /*
     squares.forEach((square) => {
       if (board.occupiedSquares.includes(Number(square.dataset.oppSquare))) {
         square.classList.add("occupied");
       }
     });
+    */
 
     // Check for any missed attacks, color them blue
     squares.forEach((square) => {
@@ -123,6 +124,24 @@ class DisplayController {
         }
       }
     }
+  }
+
+  static showPlacementInstructions(div) {
+    const lineOne = document.createElement("p");
+    const lineTwo = document.createElement("p");
+    lineOne.textContent = "Click a square on your board to place a ship.";
+    lineTwo.textContent = 'Press "R" to change direction.';
+    div.append(lineOne);
+    div.append(lineTwo);
+  }
+
+  static showAttackInstructions(div) {
+    const lineOne = document.createElement("p");
+    const lineTwo = document.createElement("p");
+    lineOne.textContent = "Click a square on your opponent's board to attack.";
+    lineTwo.textContent = "Sink all your opponent's ships!";
+    div.append(lineOne);
+    div.append(lineTwo);
   }
 }
 

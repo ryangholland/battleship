@@ -4,6 +4,7 @@ import { DisplayController } from "./display";
 
 const oppDiv = document.querySelector(".opponent-board");
 const playerDiv = document.querySelector(".player-board");
+const instructionsDiv = document.querySelector(".instructions");
 const gameOverModal = document.querySelector("[data-game-over-modal]");
 const gameOverText = document.querySelector("[data-game-over-text]");
 const newGameBtn = document.querySelector("[data-new-game-button]");
@@ -27,6 +28,8 @@ class Game {
   }
 
   initPlacementPhase() {
+    DisplayController.showPlacementInstructions(instructionsDiv);
+
     // AI randomly places ships
     while (this.aiPlayer.shipsToPlace.some((ship) => !ship.placed)) {
       this.aiPlayer.shipsToPlace.forEach((ship) => {
@@ -79,6 +82,8 @@ class Game {
               this.humanPlayer.shipsToPlace[playerPlaced];
             if (playerPlaced > 5) {
               this.humanPlayer.placing = false;
+              DisplayController.clearDiv(instructionsDiv);
+              DisplayController.showAttackInstructions(instructionsDiv);
               this.activateAttackSquares();
             }
           }
@@ -171,6 +176,7 @@ class Game {
     newGameBtn.addEventListener("click", () => {
       DisplayController.clearDiv(oppDiv);
       DisplayController.clearDiv(playerDiv);
+      DisplayController.clearDiv(instructionsDiv);
       gameOverModal.close();
       new Game();
     });
