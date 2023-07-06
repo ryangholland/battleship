@@ -36,6 +36,7 @@ class Game {
             ship.length
           );
         }
+        this.aiPlayer.gameboard.placementMode *= -1;
       });
     }
     
