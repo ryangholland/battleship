@@ -53,6 +53,8 @@ class Game {
   initPlacementPhase() {
     // AI randomly places ships
 
+    // Player placement
+    // Need to replace length and placement mode with real data
     this.playerSquares.forEach((square) => {
       square.addEventListener("mouseover", (e) => {
         DisplayController.placementHover(
