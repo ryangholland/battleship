@@ -77,6 +77,7 @@ class DisplayController {
   static clearSquares(squares) {
     squares.forEach((square) => {
       square.className = "";
+      square.style.backgroundColor = "";
       square.classList.add("blank");
     });
   }

@@ -51,7 +51,6 @@ class Game {
 
   initGameLoop() {
     this.initPlacementPhase();
-    this.activateSquares();
   }
 
   initPlacementPhase() {
@@ -68,30 +67,36 @@ class Game {
     }
 
     // Player placement
-    // Need to replace length and placement mode with real data
+    this.activatePlacementSquares();
+
+    let playerPlaced = 0;
     this.playerSquares.forEach((square) => {
-      square.addEventListener("mouseover", (e) => {
-        DisplayController.placementHover(
-          Number(e.target.dataset.playerSquare),
-          this.playerSquares,
-          4,
-          1
-        );
-      });
-    });
-    this.playerSquares.forEach((square) => {
-      square.addEventListener("mouseout", (e) => {
-        DisplayController.placementHoverOut(
-          Number(e.target.dataset.playerSquare),
-          this.playerSquares,
-          4,
-          1
-        );
+      square.addEventListener("click", (e) => {
+        if (this.humanPlayer.placing) {
+          let placed = this.humanPlayer.gameboard.placeShip(
+            Number(e.target.dataset.playerSquare),
+            this.humanPlayer.activeShip.length
+          );
+
+          if (placed) {
+            DisplayController.renderPlayerBoard(
+              this.playerSquares,
+              this.humanPlayer.gameboard
+            );
+            playerPlaced++;
+            this.humanPlayer.activeShip =
+              this.humanPlayer.shipsToPlace[playerPlaced];
+            if (playerPlaced > 5) {
+              this.humanPlayer.placing = false;
+              this.activateAttackSquares();
+            }
+          }
+        }
       });
     });
   }
 
-  activateSquares() {
+  activateAttackSquares() {
     this.oppSquares.forEach((square) => {
       square.addEventListener("click", (e) => {
         this.playRound(e);
@@ -99,10 +104,38 @@ class Game {
     });
   }
 
-  deactivateSquares() {
+  deactivateAttackSquares() {
     this.oppSquares.forEach((square) => {
       square.removeEventListener("click", (e) => {
         this.playRound(e);
+      });
+    });
+  }
+
+  activatePlacementSquares() {
+    this.playerSquares.forEach((square) => {
+      square.addEventListener("mouseover", (e) => {
+        if (this.humanPlayer.placing) {
+          DisplayController.placementHover(
+            Number(e.target.dataset.playerSquare),
+            this.playerSquares,
+            this.humanPlayer.activeShip.length,
+            1
+          );
+        }
+      });
+    });
+
+    this.playerSquares.forEach((square) => {
+      square.addEventListener("mouseout", (e) => {
+        if (this.humanPlayer.placing) {
+          DisplayController.placementHoverOut(
+            Number(e.target.dataset.playerSquare),
+            this.playerSquares,
+            this.humanPlayer.activeShip.length,
+            1
+          );
+        }
       });
     });
   }

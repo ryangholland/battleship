@@ -36,6 +36,8 @@ class Player {
         id: 6,
       },
     ];
+    this.activeShip = this.shipsToPlace[0];
+    this.placing = true;
   }
 }
 
