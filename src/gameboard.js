@@ -32,18 +32,31 @@ class Gameboard {
   }
 
   placeShip(coord, length) {
-    // Fail to place ship if ship length extends beyond row length
+    // Horizontal - fail to place ship if ship length extends beyond row length
     if (
+      this.placementMode > 0 &&
       !this.rows.some(
         (row) => row.includes(coord) && row.includes(coord + length - 1)
       )
     )
       return;
 
+    // Vertical - fail to place ship if ship length extends beyond col length
+    if (this.placementMode < 0 && coord - 10 + 10 * length > 99) return;
+
     // Populate an array with the proposed coordinates
     const newCoords = [];
-    for (let i = coord; i < coord + length; i++) {
-      newCoords.push(i);
+    // Horizontal
+    if (this.placementMode > 0) {
+      for (let i = coord; i < coord + length; i++) {
+        newCoords.push(i);
+      }
+    }
+    // Vertical
+    if (this.placementMode < 0) {
+      for (let i = coord; i < coord + (length * 10); i += 10) {
+        newCoords.push(i);
+      }
     }
 
     // Fail to place ship if any of the proposed coordiantes are occupied

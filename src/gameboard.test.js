@@ -21,6 +21,13 @@ test("Placing a 5-length ship horizontally correctly populates placedShips", () 
   expect(gameboard.placedShips.length).toBe(1);
 });
 
+test("Placing a 5-length ship vertically correctly populates placedShips", () => {
+  const gameboard = new Gameboard();
+  gameboard.placementMode = -1;
+  gameboard.placeShip(15, 5);
+  expect(gameboard.placedShips.length).toBe(1);
+});
+
 test("Trying to place a ship over an existing ship will fail", () => {
   const gameboard = new Gameboard();
   gameboard.placeShip(0, 5);
@@ -35,6 +42,14 @@ test("Trying to place a ship over an existing ship will fail 2", () => {
   expect(gameboard.placedShips.length).toBe(1);
 });
 
+test("Trying to place a vertical ship over horizontal ship will fail", () => {
+  const gameboard = new Gameboard();
+  gameboard.placeShip(81, 5);
+  gameboard.placementMode = -1;
+  gameboard.placeShip(73, 3);
+  expect(gameboard.placedShips.length).toBe(1);
+});
+
 test("Trying to place a ship beyond row length will fail", () => {
   const gameboard = new Gameboard();
   gameboard.placeShip(8, 4);
@@ -44,6 +59,20 @@ test("Trying to place a ship beyond row length will fail", () => {
 test("Trying to place a ship beyond row length will fail 2", () => {
   const gameboard = new Gameboard();
   gameboard.placeShip(97, 5);
+  expect(gameboard.placedShips.length).toBe(0);
+});
+
+test("Trying to place a ship beyond col length will fail", () => {
+  const gameboard = new Gameboard();
+  gameboard.placementMode = -1;
+  gameboard.placeShip(73, 4);
+  expect(gameboard.placedShips.length).toBe(0);
+});
+
+test("Trying to place a ship beyond col length will fail 2", () => {
+  const gameboard = new Gameboard();
+  gameboard.placementMode = -1;
+  gameboard.placeShip(96, 2);
   expect(gameboard.placedShips.length).toBe(0);
 });
 
