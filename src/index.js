@@ -23,11 +23,15 @@ class Game {
       document.querySelectorAll("[data-player-square]")
     );
 
-    this.placeMockShips();
+    //this.placeMockShips();
+
+    this.initPlacementPhase();
+
     DisplayController.renderPlayerBoard(
       this.playerSquares,
       this.humanPlayer.gameboard
     );
+    DisplayController.renderOppBoard(this.oppSquares, this.aiPlayer.gameboard);
 
     this.initGameLoop();
   }
@@ -52,6 +56,16 @@ class Game {
 
   initPlacementPhase() {
     // AI randomly places ships
+    while (this.aiPlayer.shipsToPlace.some((ship) => !ship.placed)) {
+      this.aiPlayer.shipsToPlace.forEach((ship) => {
+        if (!ship.placed) {
+          ship.placed = this.aiPlayer.gameboard.placeShip(
+            Math.floor(Math.random() * (Math.floor(99) - 0)),
+            ship.length
+          );
+        }
+      });
+    }
 
     // Player placement
     // Need to replace length and placement mode with real data

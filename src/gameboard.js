@@ -69,6 +69,7 @@ class Gameboard {
 
     // Add new coordiantes to occupiedSquares
     this.occupiedSquares.push(...newCoords);
+    return true;
   }
 
   receiveAttack(coord) {
